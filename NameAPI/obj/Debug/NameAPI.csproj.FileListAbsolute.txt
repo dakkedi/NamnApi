@@ -1,0 +1,7 @@
+C:\Users\Andreas Ohlin\Desktop\Capo AB - Anställningsprov (.NET utvecklare)\Name\NameAPI\obj\Debug\NameAPI.csprojResolveAssemblyReference.cache
+C:\Users\Andreas Ohlin\Desktop\Capo AB - Anställningsprov (.NET utvecklare)\Name\NameAPI\bin\Debug\NameAPI.dll
+C:\Users\Andreas Ohlin\Desktop\Capo AB - Anställningsprov (.NET utvecklare)\Name\NameAPI\bin\Debug\NameAPI.pdb
+C:\Users\Andreas Ohlin\Desktop\Capo AB - Anställningsprov (.NET utvecklare)\Name\NameAPI\obj\Debug\NameAPI.dll
+C:\Users\Andreas Ohlin\Desktop\Capo AB - Anställningsprov (.NET utvecklare)\Name\NameAPI\obj\Debug\NameAPI.pdb
+C:\Users\Andreas Ohlin\Desktop\Capo AB - Anställningsprov (.NET utvecklare)\Name\NameAPI\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Andreas Ohlin\Desktop\Capo AB - Anställningsprov (.NET utvecklare)\Name\NameAPI\bin\Debug\Newtonsoft.Json.xml
