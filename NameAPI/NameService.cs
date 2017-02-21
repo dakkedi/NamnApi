@@ -36,6 +36,14 @@ namespace NameAPI
             List<NameModel> nameModelList = new List<NameModel>();
 
             // Go through all name-objects 
+            /* 
+                Chris: foreach(var whateverTheFuckEver in myList){
+                           whateverTheFuckEver.property = 0;
+                        }
+                        myList måste då vara en List<>
+                        och sedan om du vill ha myList till en array
+                        var myArray = myList.ToArray()
+            */
             for (int i = 0; i < jsonModel.names.Count; i++)
             {
                 // Create NameModel object
