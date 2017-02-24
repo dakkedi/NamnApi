@@ -12,7 +12,7 @@ namespace Name.Controllers
     {
         public ActionResult Index()
         {
-            List<NameModel> nameModelList = NameAPI.NameService.GetNameList(10);
+            List<NameModel> nameModelList = NameAPI.NameService.GetNameList(NameType.FirstName, NameGender.Female, 10);
             ViewBag.Names = nameModelList;
             return View();
         }
