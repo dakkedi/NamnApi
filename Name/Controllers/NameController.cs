@@ -16,11 +16,12 @@ namespace Name.Controllers
         }
 
         [HttpPost]
-        public ActionResult ShowNames(NameFormModel formData)
+        public ActionResult ShowNames(NameForm formData)
         {
-            Debug.WriteLine("formData");
-            Debug.WriteLine(formData);
-            return RedirectToAction("Index");
+            //int nameGenderData, int nameTypeData, int nameAmountData
+            //Debug.WriteLine("formData");
+            //Debug.WriteLine(formData);
+            return RedirectToAction("/");
         }
     }
 }

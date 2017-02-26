@@ -1,13 +1,15 @@
-﻿@{
+﻿@using System.Web.Mvc.Html;
+@{
     ViewBag.Title = "Home Page";
 }
 <div class="container">
     <h1>Get your names here!</h1>
-    @using (Html.BeginForm("ShowNames", "Name", FormMethod.Post))
-    {
-        @Html.DropDownListFor(m => m.CurrentTypeId, Model.NameFormModel);
-    }
-    <form action="/Name/NameForm" method="post">
+    @*@using (Html.BeginForm("ShowNames", "Name", FormMethod.Post))*@
+    @* { *@
+        @*@Html.DropDownListFor(m => m.CurrentTypeId, Model.NameForm.TypeItems);*@
+        @*@Html.EnumDropDownListFor(x => x.CurrentTypeId, "Select type", new { @class = "form-control" });*@
+    @*}*@
+    <form action="/Name/ShowNames" method="post">
         <div class="row">
             <div class="col-md-4">
                 <label for="name-gender">Pick a gender</label>
