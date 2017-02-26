@@ -5,3 +5,10 @@ C:\Users\Andreas Ohlin\Desktop\Capo AB - Anställningsprov (.NET utvecklare)\Nam
 C:\Users\Andreas Ohlin\Desktop\Capo AB - Anställningsprov (.NET utvecklare)\Name\NameAPI\obj\Debug\NameAPI.pdb
 C:\Users\Andreas Ohlin\Desktop\Capo AB - Anställningsprov (.NET utvecklare)\Name\NameAPI\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Andreas Ohlin\Desktop\Capo AB - Anställningsprov (.NET utvecklare)\Name\NameAPI\bin\Debug\Newtonsoft.Json.xml
+E:\capo\arbetsprov\NameAPI\bin\Debug\NameAPI.dll
+E:\capo\arbetsprov\NameAPI\bin\Debug\NameAPI.pdb
+E:\capo\arbetsprov\NameAPI\bin\Debug\Newtonsoft.Json.dll
+E:\capo\arbetsprov\NameAPI\bin\Debug\Newtonsoft.Json.xml
+E:\capo\arbetsprov\NameAPI\obj\Debug\NameAPI.csprojResolveAssemblyReference.cache
+E:\capo\arbetsprov\NameAPI\obj\Debug\NameAPI.dll
+E:\capo\arbetsprov\NameAPI\obj\Debug\NameAPI.pdb

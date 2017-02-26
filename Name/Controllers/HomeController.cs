@@ -4,16 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using NameAPI.Models;
 
 namespace Name.Controllers
 {
     public class HomeController : Controller
     {
+        // creating a variable to the NameController
+        //private NameController NameCont = new NameController();
+
         public ActionResult Index()
         {
-            List<NameModel> nameModelList = NameAPI.NameService.GetNameList(NameType.FirstName, NameGender.Female, 10);
-            ViewBag.Names = nameModelList;
+            ViewBag.Names = NameController.GetNames();
             return View();
         }
     }

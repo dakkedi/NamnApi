@@ -1,10 +1,42 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-
-<ul>
-    @foreach (var name in ViewBag.Names)
+<div class="container">
+    <h1>Get your names here!</h1>
+    @using (Html.BeginForm("ShowNames", "Name", FormMethod.Post))
     {
-        <li>@name.FirstName @name.LastName, @name.Gender</li>
+        @Html.DropDownListFor(m => m.CurrentTypeId, Model.NameFormModel);
     }
-</ul>
+    <form action="/Name/NameForm" method="post">
+        <div class="row">
+            <div class="col-md-4">
+                <label for="name-gender">Pick a gender</label>
+                <select id="name-gender" name="nameGenderData">
+                    <option value="0">Both</option>
+                    <option value="1">Male</option>
+                    <option value="2">Female</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="name-type">Pick a name type</label>
+                <select id="name-type" name="nameTypeData">
+                    <option value="0">Both</option>
+                    <option value="1">FirstName</option>
+                    <option value="2">SurName</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="name-amount">Amount of names</label>
+                <input type="number" id="name-amount" name="nameAmountData" value="10">
+            </div>
+        </div>
+        <input type="submit" name="submit" value="Hämta namn" />
+    </form>
+
+    <ul>
+        @foreach (var name in ViewBag.Names)
+        {
+            <li>@name.FirstName @name.LastName, @name.Gender</li>
+            }
+    </ul>
+</div>
