@@ -1,9 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace Name.Controllers
 {
@@ -15,6 +10,7 @@ namespace Name.Controllers
         public ActionResult Index()
         {
             ViewBag.Names = NameController.GetNames();
+
             return View();
         }
     }

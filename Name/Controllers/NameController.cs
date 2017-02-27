@@ -2,7 +2,6 @@
 using System.Web.Mvc;
 using NameAPI.Models;
 using Name.Models;
-using System.Diagnostics;
 
 namespace Name.Controllers
 {
@@ -16,7 +15,7 @@ namespace Name.Controllers
         }
 
         [HttpPost]
-        public ActionResult ShowNames(NameForm formData)
+        public ActionResult Index(NameForm formData)
         {
             //int nameGenderData, int nameTypeData, int nameAmountData
             //Debug.WriteLine("formData");
