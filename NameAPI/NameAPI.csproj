@@ -53,6 +53,7 @@
     <Compile Include="Models\NameModel.cs" />
     <Compile Include="NameService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="queryValues\limit.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -9,21 +9,13 @@
 }
 <div class="container">
     <h1>Get your names here!</h1>
-    @using (Html.BeginForm("Index", "Name", FormMethod.Post))
+    @*@using (Html.BeginForm("Index", "Name", FormMethod.Post))
     { 
         @Html.DropDownListFor(m => m.CurrentTypeId, ((IEnumerable<SelectListItem>)Model.NameForm.TypeItems));
 
         <input type="submit" value="Uppdatera listan" />
-    }
-
-    <ul>
-        @foreach (var name in ViewBag.Names)
-        {
-            <li>@name.FirstName @name.LastName, @name.Gender</li>
-            }
-    </ul>
-</div>
-    @*<form action="/Name/ShowNames" method="post">
+    }*@
+    <form action="/Name/ShowNames" method="post">
         <div class="row">
             <div class="col-md-4">
                 <label for="name-gender">Pick a gender</label>
@@ -47,4 +39,12 @@
             </div>
         </div>
         <input type="submit" name="submit" value="Hämta namn" />
-    </form>*@
+    </form>
+
+    <ul>
+        @foreach (var name in ViewBag.Names)
+        {
+            <li>@name.FirstName @name.LastName, @name.Gender</li>
+            }
+    </ul>
+</div>

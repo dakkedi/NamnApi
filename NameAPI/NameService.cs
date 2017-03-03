@@ -8,140 +8,152 @@ using NameAPI.Models;
 
 namespace NameAPI
 {
+    /// <summary>
+    /// List names; NameModel as model 
+    /// </summary>
     public class JsonModel
     {
-        public List<JsonModelInner> names;
+        public List<NameModel> names;
     }
-    public class JsonModelInner
+
+    /// <summary>
+    /// Class that handles the query string
+    /// </summary>
+    public class QueryValues
     {
-        public string firstname;
-        public string surname;
-        public string gender;
+        public static string limit;
+        public static string type;
+        public static string gender;
+
+        private static string defaultLimit = "10";
+        private static string defaultType = "both";
+        private static string defaultGender = "both";
+
+        private static string query;
+
+        /// <summary>
+        /// Constructor calls setDefaultQueryString()
+        /// </summary>
+        public QueryValues()
+        {
+            setDefaultQueryString();
+        }
+
+        /// <summary>
+        /// Sets the default query string
+        /// </summary>
+        private static void setDefaultQueryString()
+        {
+            query = "?limit=" + defaultLimit + "&type=" + defaultType + "&gender=" + defaultGender;
+        }
+
+        /// <summary>
+        /// Overrides current query string
+        /// </summary>
+        private static void setQueryString()
+        {
+            query = "?limit=" + limit + "&type=" + type + "&gender=" + gender;
+        }
+
+        /// <summary>
+        /// Returns the current query string
+        /// </summary>
+        /// <returns>string</returns>
+        public static string getQueryString()
+        {
+            return query;
+        }
+
     }
+
+    /// <summary>
+    /// Class that handles the name api
+    /// </summary>
     public class NameService
     {
-        // Variable that contains the api url.
-        private static string apiUrl = "http://api.namnapi.se/v2/names.json?";
+        private static string apiUrl = "http://api.namnapi.se/v2/names.json";
 
-        // Variables that will contain the chosen type and gender
-        private static string queryGender;
-        private static string queryType;
+        private static QueryValues queryValues = new QueryValues();
 
+        /// <summary>
+        /// Prepares list of names based on the amount input
+        /// </summary>
+        /// <param name="limit"></param>
         public static List<NameModel> GetNameList(int limit)
         {
-            // Sets the query string
-            string query = "limit=" + limit;
-
+            QueryValues.limit = limit.ToString();
             // Prepares a list of names from the response of the query
-            List<NameModel> nameList = PrepareNameList(query);
+            List<NameModel> nameList = PrepareNameList();
             
             return nameList;
         }
 
+        /// <summary>
+        /// Prepares list of names based on the amount input and type of name
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="limit"></param>
         public static List<NameModel> GetNameList(NameType type, int limit)
         {
-            // Sets the type variable
-            SetQueryType(type);
-            // Sets the query string
-            string query = "limit=" + limit + "&type=" + GetQueryType();
-
+            QueryValues.type = type.ToString();
+            QueryValues.limit = limit.ToString();
             // Prepares a list of names from the response of the query
-            List<NameModel> nameList = PrepareNameList(query);
+            List<NameModel> nameList = PrepareNameList();
 
             return nameList;
         }
 
+        /// <summary>
+        /// Prepares list of names based on the amount input and gender
+        /// </summary>
+        /// <param name="gender"></param>
+        /// <param name="limit"></param>
         public static List<NameModel> GetNameList(NameGender gender, int limit)
         {
-            // Sets the query gender
-            SetQueryGender(gender);
-            // Sets the query string
-            string query = "limit=" + limit + "&gender=" + GetQueryGender();
-
+            QueryValues.gender = gender.ToString();
+            QueryValues.limit = limit.ToString();
             // Prepares a list of names from the response of the query
-            List<NameModel> nameList = PrepareNameList(query);
+            List<NameModel> nameList = PrepareNameList();
 
             return nameList;
         }
 
+        /// <summary>
+        /// Prepares list of names based on the amount input, tyoe of name and gender
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="gender"></param>
+        /// <param name="limit"></param>
         public static List<NameModel> GetNameList(NameType type, NameGender gender, int limit)
         {
-            // Sets the query type and gender
-            SetQueryType(type);
-            SetQueryGender(gender);
-            // Sets the query string
-            string query = "limit=" + limit + "&type=" + GetQueryType() + "&gender=" + queryGender;
-
+            QueryValues.type = type.ToString().ToLower();
+            QueryValues.gender = gender.ToString().ToLower();
+            QueryValues.limit = limit.ToString();
             // Prepares a list of names from the response of the query
-            List<NameModel> nameList = PrepareNameList(query);
+            List<NameModel> nameList = PrepareNameList();
 
             return nameList;
         }
 
-        private static void SetQueryType(NameType type)
-        {
-            // Sets queryType to the chosen type, defaults to Both
-            switch (type)
-            {
-                case NameType.FirstName:
-                    queryType = "firstname";
-                    break;
-                case NameType.SurName:
-                    queryType = "surname";
-                    break;
-                case NameType.Both:
-                    queryType = "both";
-                    break;
-                default:
-                    queryType = "both";
-                    break;
-            }
-        }
-
-        public static string GetQueryType()
-        {
-            // returns the previous set queryType
-            return queryType;
-        }
-
-        private static void SetQueryGender(NameGender gender)
-        {
-            // Sets queryGender to the chosen gender, defaults to Both
-            switch (gender)
-            {
-                case NameGender.Male:
-                    queryGender = "male";
-                    break;
-                case NameGender.Female:
-                    queryGender = "female";
-                    break;
-                case NameGender.Both:
-                    queryGender = "both";
-                    break;
-                default:
-                    queryGender = "both";
-                    break;
-            }
-        }
-
-        private static string GetQueryGender()
-        {
-            // returns the previous set queryGender
-            return queryGender;
-        }
-
-        private static List<NameModel> PrepareNameList(string query)
+        /// <summary>
+        /// Gets the response from API call and prepares a list of names
+        /// </summary>
+        private static List<NameModel> PrepareNameList()
         {
             // Retreives JsonModel from api url with query-string
-            JsonModel apiResponse = GetApiResponse(query);
+            JsonModel apiResponse = GetApiResponse();
 
             // Go through all name-objects and populate the list
             List<NameModel> nameList = PopulateNameModelList(apiResponse);
             return nameList;
         }
 
-        private static JsonModel GetApiResponse(string query)
+        /// <summary>
+        /// Gets query string and makes api call. Then converts the string from api call into a List object
+        /// </summary>
+        private static JsonModel GetApiResponse()
         {
+            string query = QueryValues.getQueryString();
             // Retreives json-string from api url with query
             var apiStringResponse = new WebClient().DownloadString(apiUrl + query);
 
@@ -151,6 +163,10 @@ namespace NameAPI
             return apiResponse;
         }
 
+        /// <summary>
+        /// Creates a NameModel List and populates it with the apiResponse parameter
+        /// </summary>
+        /// <param name="apiResponse"></param>
         private static List<NameModel> PopulateNameModelList(JsonModel apiResponse)
         {
             // creates list to be returned
@@ -163,11 +179,11 @@ namespace NameAPI
                 NameModel item = new NameModel();
 
                 // Populate the item object with data from the current name iterated
-                item.FirstName = apiResponse.names[i].firstname;
-                item.LastName = apiResponse.names[i].surname;
+                item.FirstName = apiResponse.names[i].FirstName;
+                item.LastName = apiResponse.names[i].LastName;
 
                 // Checks gender type
-                switch (apiResponse.names[i].gender)
+                switch (apiResponse.names[i].Gender.ToString())
                 {
                     case "both":
                         item.Gender = NameGender.Both;
