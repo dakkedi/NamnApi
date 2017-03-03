@@ -1,0 +1,10 @@
+﻿
+@model Name.Models.NameDropdownModel
+
+<label for="name-gender">Pick a gender</label>
+<select id="name-gender" name="nameGenderData">
+    @foreach (var genderItem in Model.GenderItems)
+    {
+        <option value="@genderItem.Value">@genderItem.Text</option>
+    }
+</select>

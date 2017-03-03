@@ -1,4 +1,6 @@
 ﻿using System.Web.Mvc;
+using Name.Models;
+using NameAPI.Models;
 
 namespace Name.Controllers
 {
