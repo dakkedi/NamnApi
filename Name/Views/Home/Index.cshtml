@@ -10,28 +10,27 @@
     {
         <div class="row">
             <div class="col-md-4">
-                @{ Html.RenderAction("GetGenderDropdown", "Name"); } 
+                @{ Html.RenderAction("GetGenderDropdown", "Name"); }
             </div>
             <div class="col-md-4">
-                <label for="name-type">Pick a name type</label>
-                <select id="name-type" name="nameTypeData">
-                    <option value="0">Both</option>
-                    <option value="1">FirstName</option>
-                    <option value="2">SurName</option>
-                </select>
+                @{ Html.RenderAction("GetTypeDropdown", "Name"); }
             </div>
             <div class="col-md-4">
                 <label for="name-amount">Amount of names</label>
-                <input type="number" id="name-amount" name="nameAmountData" value="10">
+                <input type="number" id="name-amount" name="nameAmountData" value="10" min="0">
             </div>
         </div>
         <input type="submit" name="submit" value="Hämta namn" />
     }
 
-    <ul>
-        @foreach (var name in ViewBag.Names)
-        {
-            <li>@name.FirstName @name.LastName, @name.Gender</li>
-            }
-    </ul>
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <ul>
+                @foreach (var name in ViewBag.Names)
+                {
+                    <li>@name.FirstName @name.LastName, @name.Gender</li>
+                    }
+            </ul>
+        </div>
+    </div>
 </div>

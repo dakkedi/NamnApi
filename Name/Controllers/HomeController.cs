@@ -6,9 +6,10 @@ namespace Name.Controllers
 {
     public class HomeController : Controller
     {
-        // creating a variable to the NameController
-        //private NameController NameCont = new NameController();
-
+        /// <summary>
+        /// Default view for Home controller
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             ViewBag.Names = NameController.GetNames();

@@ -1,0 +1,10 @@
+﻿
+@model Name.Models.NameDropdownModel
+
+<label for="name-type">Pick a type</label>
+<select id="name-type" name="nameTypeData">
+    @foreach (var typeItem in Model.TypeItems)
+    {
+        <option value="@typeItem.Value">@typeItem.Text</option>
+    }
+</select>

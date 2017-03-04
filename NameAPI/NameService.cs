@@ -173,17 +173,17 @@ namespace NameAPI
             List<NameModel> nameModelList = new List<NameModel>();
 
             // Goes through alla names from the api response
-            for (int i = 0; i < apiResponse.names.Count; i++)
+            foreach (var name in apiResponse.names)
             {
                 // Create NameModel object
                 NameModel item = new NameModel();
 
                 // Populate the item object with data from the current name iterated
-                item.FirstName = apiResponse.names[i].FirstName;
-                item.LastName = apiResponse.names[i].LastName;
+                item.FirstName = name.FirstName;
+                item.LastName = name.LastName;
 
                 // Checks gender type
-                switch (apiResponse.names[i].Gender.ToString())
+                switch (name.Gender.ToString())
                 {
                     case "both":
                         item.Gender = NameGender.Both;
@@ -195,6 +195,7 @@ namespace NameAPI
                         item.Gender = NameGender.Female;
                         break;
                 }
+
                 // Lastly adds the NameModel object into the NameModel List
                 nameModelList.Add(item);
             }

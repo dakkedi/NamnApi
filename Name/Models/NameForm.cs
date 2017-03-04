@@ -4,41 +4,36 @@ using NameAPI.Models;
 
 namespace Name.Models
 {
-    //public class NameForm
-    //{
-    //    public NameForm()
-    //    {
-    //        TypeItems = new SelectList(new[] { NameType.Both, NameType.FirstName, NameType.SurName });
-    //        GenderItems = new SelectList(new[] { NameGender.Both, NameGender.Male, NameGender.Female });
-    //        CurrentTypeId = NameType.Both;
-    //        CurrentGenderItem = NameGender.Both;
-    //    }
-
-    //    public NameType CurrentTypeId { get; set; }
-    //    public IEnumerable<SelectListItem> TypeItems { get; set; }
-
-    //    public NameGender CurrentGenderItem { get; set; }
-    //    public IEnumerable<SelectListItem> GenderItems { get; set; }
-    //}
-
+    /// <summary>
+    /// Model for the type and gender lists
+    /// </summary>
     public class NameDropdownModel
     {
         public List<NameTypeModel> TypeItems { get; set; }
         public List<NameGenderModel> GenderItems { get; set; }
     }
 
+    /// <summary>
+    /// Model for the values of NameType enum
+    /// </summary>
     public class NameTypeModel
     {
         public int Value { get; set; }
         public string Text { get; set; }
     }
 
+    /// <summary>
+    /// Model for the values of NameGender enum
+    /// </summary>
     public class NameGenderModel
     {
         public int Value { get; set; }
         public string Text { get; set; }
     }
 
+    /// <summary>
+    /// Model for the form post values
+    /// </summary>
     public class FormPostModel
     {
         public int nameGenderData;
