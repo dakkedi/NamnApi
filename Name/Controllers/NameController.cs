@@ -80,9 +80,13 @@ namespace Name.Controllers
         /// <param name="post"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult GetNames(FormPostModel post)
+        public ActionResult PostGetNames()
         {
-            return RedirectToAction("Index", "Home");
+            //Request.Form.Get("nameTypeData");
+            //Request.Form.Get("nameGenderData");
+            //Request.Form.Get("nameAmountData");
+            TempData["form"] = Request.Form;
+            return RedirectToAction("Index", "Home", Request.Form);
         }
     }
 }

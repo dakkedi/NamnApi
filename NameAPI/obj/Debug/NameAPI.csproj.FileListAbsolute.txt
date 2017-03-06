@@ -12,3 +12,10 @@ E:\capo\arbetsprov\NameAPI\bin\Debug\Newtonsoft.Json.xml
 E:\capo\arbetsprov\NameAPI\obj\Debug\NameAPI.csprojResolveAssemblyReference.cache
 E:\capo\arbetsprov\NameAPI\obj\Debug\NameAPI.dll
 E:\capo\arbetsprov\NameAPI\obj\Debug\NameAPI.pdb
+E:\Ohlins\NamnApi\NameAPI\bin\Debug\NameAPI.dll
+E:\Ohlins\NamnApi\NameAPI\bin\Debug\NameAPI.pdb
+E:\Ohlins\NamnApi\NameAPI\bin\Debug\Newtonsoft.Json.dll
+E:\Ohlins\NamnApi\NameAPI\bin\Debug\Newtonsoft.Json.xml
+E:\Ohlins\NamnApi\NameAPI\obj\Debug\NameAPI.csprojResolveAssemblyReference.cache
+E:\Ohlins\NamnApi\NameAPI\obj\Debug\NameAPI.dll
+E:\Ohlins\NamnApi\NameAPI\obj\Debug\NameAPI.pdb
