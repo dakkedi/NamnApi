@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Linq;
 using NameAPI.Models;
-
+using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 
 namespace NameAPI
 {
@@ -13,7 +11,14 @@ namespace NameAPI
     /// </summary>
     public class JsonModel
     {
-        public List<NameModel> names;
+        public List<JsonModelInner> names;
+    }
+
+    public class JsonModelInner
+    {
+        public string firstname;
+        public string surname;
+        public string gender;
     }
 
     /// <summary>
@@ -21,30 +26,18 @@ namespace NameAPI
     /// </summary>
     public class QueryValues
     {
-        public static string limit;
-        public static string type;
-        public static string gender;
-
-        private static string defaultLimit = "10";
-        private static string defaultType = "both";
-        private static string defaultGender = "both";
-
+        public static string limit = "10";
+        public static string type = "both";
+        public static string gender = "both";
+        
         private static string query;
 
         /// <summary>
-        /// Constructor calls setDefaultQueryString()
+        /// Constructor calls setQueryString()
         /// </summary>
         public QueryValues()
         {
-            setDefaultQueryString();
-        }
-
-        /// <summary>
-        /// Sets the default query string
-        /// </summary>
-        private static void setDefaultQueryString()
-        {
-            query = "?limit=" + defaultLimit + "&type=" + defaultType + "&gender=" + defaultGender;
+            setQueryString();
         }
 
         /// <summary>
@@ -76,7 +69,7 @@ namespace NameAPI
         private static QueryValues queryValues = new QueryValues();
 
         /// <summary>
-        /// Prepares list of names based on the amount input
+        /// Prepares list of names based on the limit input
         /// </summary>
         /// <param name="limit"></param>
         public static List<NameModel> GetNameList(int limit)
@@ -89,7 +82,7 @@ namespace NameAPI
         }
 
         /// <summary>
-        /// Prepares list of names based on the amount input and type of name
+        /// Prepares list of names based on the limit input and type of name
         /// </summary>
         /// <param name="type"></param>
         /// <param name="limit"></param>
@@ -104,7 +97,7 @@ namespace NameAPI
         }
 
         /// <summary>
-        /// Prepares list of names based on the amount input and gender
+        /// Prepares list of names based on the limit input and gender
         /// </summary>
         /// <param name="gender"></param>
         /// <param name="limit"></param>
@@ -119,7 +112,7 @@ namespace NameAPI
         }
 
         /// <summary>
-        /// Prepares list of names based on the amount input, tyoe of name and gender
+        /// Prepares list of names based on the limit input, tyoe of name and gender
         /// </summary>
         /// <param name="type"></param>
         /// <param name="gender"></param>
@@ -159,7 +152,8 @@ namespace NameAPI
 
             // Used to convert the json string into model JsonModel
             JsonModel apiResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<JsonModel>(apiStringResponse);
-
+            //JObject test = JObject.Parse(apiStringResponse);
+            
             return apiResponse;
         }
 
@@ -179,11 +173,11 @@ namespace NameAPI
                 NameModel item = new NameModel();
 
                 // Populate the item object with data from the current name iterated
-                item.FirstName = name.FirstName;
-                item.LastName = name.LastName;
+                item.FirstName = name.firstname;
+                item.LastName = name.surname;
 
                 // Checks gender type
-                switch (name.Gender.ToString())
+                switch (name.gender)
                 {
                     case "both":
                         item.Gender = NameGender.Both;

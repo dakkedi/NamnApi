@@ -16,8 +16,8 @@
                 @{ Html.RenderAction("GetTypeDropdown", "Name"); }
             </div>
             <div class="col-md-4">
-                <label for="name-amount">Amount of names</label>
-                <input type="number" id="name-amount" name="nameAmountData" value="10" min="0">
+                <label for="name-limit">Limit of names</label>
+                <input type="number" id="name-limit" name="nameLimitData" value="10" min="0">
             </div>
         </div>
         <input type="submit" name="submit" value="Hämta namn" />
@@ -29,7 +29,7 @@
                 @foreach (var name in ViewBag.Names)
                 {
                     <li>@name.FirstName @name.LastName, @name.Gender</li>
-                    }
+                }
             </ul>
         </div>
     </div>

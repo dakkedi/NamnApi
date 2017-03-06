@@ -38,6 +38,6 @@ namespace Name.Models
     {
         public int nameGenderData;
         public int nameTypeData;
-        public int nameAmountData;
+        public int nameLimitData;
     }
 }

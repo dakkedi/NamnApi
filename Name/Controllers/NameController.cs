@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using NameAPI.Models;
 using System;
 using Name.Models;
+using System.Collections.Specialized;
 
 namespace Name.Controllers
 {
@@ -12,13 +13,25 @@ namespace Name.Controllers
         /// Gets list of names from NameAPi.NameService
         /// </summary>
         /// <param name="nameType"></param>
-        /// <param name="namegender"></param>
-        /// <param name="amount"></param>
+        /// <param name="nameGender"></param>
+        /// <param name="limit"></param>
         /// <returns></returns>
-        public static List<NameModel> GetNames(NameType nameType = NameType.Both, NameGender namegender = NameGender.Both, int amount = 10)
+        public static List<NameModel> GetNames()
         {
-            List<NameModel> nameModelList = NameAPI.NameService.GetNameList(nameType, namegender, amount);
+            int defaultLimit = 10;
+            List<NameModel> nameModelList = NameAPI.NameService.GetNameList(defaultLimit);
             
+            return nameModelList;
+        }
+
+        public static List<NameModel> GetNames(NameValueCollection FormData)
+        {
+            NameType nameTypeValue = (NameType)Enum.Parse(typeof(NameType), FormData.Get("nameTypeData"));
+            NameGender nameGenderValue = (NameGender)Enum.Parse(typeof(NameGender), FormData.Get("nameTypeData"));
+            int nameLimitValue = int.Parse(FormData.Get("nameLimitData"));
+
+            List<NameModel> nameModelList = NameAPI.NameService.GetNameList(nameTypeValue, nameGenderValue, nameLimitValue);
+
             return nameModelList;
         }
 
@@ -82,9 +95,6 @@ namespace Name.Controllers
         [HttpPost]
         public ActionResult PostGetNames()
         {
-            //Request.Form.Get("nameTypeData");
-            //Request.Form.Get("nameGenderData");
-            //Request.Form.Get("nameAmountData");
             TempData["form"] = Request.Form;
             return RedirectToAction("Index", "Home", Request.Form);
         }
