@@ -27,7 +27,7 @@ namespace Name.Controllers
         public static List<NameModel> GetNames(NameValueCollection FormData)
         {
             NameType nameTypeValue = (NameType)Enum.Parse(typeof(NameType), FormData.Get("nameTypeData"));
-            NameGender nameGenderValue = (NameGender)Enum.Parse(typeof(NameGender), FormData.Get("nameTypeData"));
+            NameGender nameGenderValue = (NameGender)Enum.Parse(typeof(NameGender), FormData.Get("nameGenderData"));
             int nameLimitValue = int.Parse(FormData.Get("nameLimitData"));
 
             List<NameModel> nameModelList = NameAPI.NameService.GetNameList(nameTypeValue, nameGenderValue, nameLimitValue);
