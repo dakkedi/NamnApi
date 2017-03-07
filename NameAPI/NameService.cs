@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using NameAPI.Models;
-using Newtonsoft.Json.Linq;
-using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace NameAPI
 {
@@ -11,14 +10,14 @@ namespace NameAPI
     /// </summary>
     public class JsonModel
     {
-        public List<JsonModelInner> names;
-    }
-
-    public class JsonModelInner
-    {
         public string firstname;
         public string surname;
         public string gender;
+    }
+
+    public class JsonModelName
+    {
+        public List<JsonModel> names;
     }
 
     /// <summary>
@@ -134,7 +133,7 @@ namespace NameAPI
         private static List<NameModel> PrepareNameList()
         {
             // Retreives JsonModel from api url with query-string
-            JsonModel apiResponse = GetApiResponse();
+            JsonModelName apiResponse = GetApiResponse();
 
             // Go through all name-objects and populate the list
             List<NameModel> nameList = PopulateNameModelList(apiResponse);
@@ -144,16 +143,17 @@ namespace NameAPI
         /// <summary>
         /// Gets query string and makes api call. Then converts the string from api call into a List object
         /// </summary>
-        private static JsonModel GetApiResponse()
+        private static JsonModelName GetApiResponse()
         {
             string query = QueryValues.getQueryString();
             // Retreives json-string from api url with query
             var apiStringResponse = new WebClient().DownloadString(apiUrl + query);
 
+            JsonModelName apiResponse = JsonConvert.DeserializeObject<JsonModelName>(apiStringResponse);
             // Used to convert the json string into model JsonModel
-            JsonModel apiResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<JsonModel>(apiStringResponse);
+            //List<JsonModel> apiResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<JsonModel>(apiStringResponse);
             //JObject test = JObject.Parse(apiStringResponse);
-            
+
             return apiResponse;
         }
 
@@ -161,7 +161,7 @@ namespace NameAPI
         /// Creates a NameModel List and populates it with the apiResponse parameter
         /// </summary>
         /// <param name="apiResponse"></param>
-        private static List<NameModel> PopulateNameModelList(JsonModel apiResponse)
+        private static List<NameModel> PopulateNameModelList(JsonModelName apiResponse)
         {
             // creates list to be returned
             List<NameModel> nameModelList = new List<NameModel>();
