@@ -2,22 +2,18 @@
 using System.Net;
 using NameAPI.Models;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace NameAPI
 {
     /// <summary>
-    /// List names; NameModel as model 
+    /// Model for names
     /// </summary>
-    public class JsonModel
+    public class JsonNamesModel
     {
         public string firstname;
         public string surname;
         public string gender;
-    }
-
-    public class JsonModelName
-    {
-        public List<JsonModel> names;
     }
 
     /// <summary>
@@ -25,24 +21,24 @@ namespace NameAPI
     /// </summary>
     public class QueryValues
     {
-        public static string limit = "10";
-        public static string type = "both";
-        public static string gender = "both";
+        public string limit = "10";
+        public string type = "both";
+        public string gender = "both";
         
-        private static string query;
+        private string query;
 
         /// <summary>
         /// Constructor calls setQueryString()
         /// </summary>
         public QueryValues()
         {
-            setQueryString();
+            setQueryString(limit, type, gender);
         }
 
         /// <summary>
         /// Overrides current query string
         /// </summary>
-        private static void setQueryString()
+        private void setQueryString(string limit, string type, string gender)
         {
             query = "?limit=" + limit + "&type=" + type + "&gender=" + gender;
         }
@@ -51,7 +47,7 @@ namespace NameAPI
         /// Returns the current query string
         /// </summary>
         /// <returns>string</returns>
-        public static string getQueryString()
+        public string getQueryString()
         {
             return query;
         }
@@ -73,7 +69,7 @@ namespace NameAPI
         /// <param name="limit"></param>
         public static List<NameModel> GetNameList(int limit)
         {
-            QueryValues.limit = limit.ToString();
+            queryValues.limit = limit.ToString();
             // Prepares a list of names from the response of the query
             List<NameModel> nameList = PrepareNameList();
             
@@ -87,8 +83,8 @@ namespace NameAPI
         /// <param name="limit"></param>
         public static List<NameModel> GetNameList(NameType type, int limit)
         {
-            QueryValues.type = type.ToString();
-            QueryValues.limit = limit.ToString();
+            queryValues.type = type.ToString();
+            queryValues.limit = limit.ToString();
             // Prepares a list of names from the response of the query
             List<NameModel> nameList = PrepareNameList();
 
@@ -102,8 +98,8 @@ namespace NameAPI
         /// <param name="limit"></param>
         public static List<NameModel> GetNameList(NameGender gender, int limit)
         {
-            QueryValues.gender = gender.ToString();
-            QueryValues.limit = limit.ToString();
+            queryValues.gender = gender.ToString();
+            queryValues.limit = limit.ToString();
             // Prepares a list of names from the response of the query
             List<NameModel> nameList = PrepareNameList();
 
@@ -118,9 +114,10 @@ namespace NameAPI
         /// <param name="limit"></param>
         public static List<NameModel> GetNameList(NameType type, NameGender gender, int limit)
         {
-            QueryValues.type = type.ToString().ToLower();
-            QueryValues.gender = gender.ToString().ToLower();
-            QueryValues.limit = limit.ToString();
+
+            queryValues.type = type.ToString().ToLower();
+            queryValues.gender = gender.ToString().ToLower();
+            queryValues.limit = limit.ToString();
             // Prepares a list of names from the response of the query
             List<NameModel> nameList = PrepareNameList();
 
@@ -133,7 +130,7 @@ namespace NameAPI
         private static List<NameModel> PrepareNameList()
         {
             // Retreives JsonModel from api url with query-string
-            JsonModelName apiResponse = GetApiResponse();
+            Dictionary<string, List<JsonNamesModel>> apiResponse = GetApiResponse();
 
             // Go through all name-objects and populate the list
             List<NameModel> nameList = PopulateNameModelList(apiResponse);
@@ -143,13 +140,13 @@ namespace NameAPI
         /// <summary>
         /// Gets query string and makes api call. Then converts the string from api call into a List object
         /// </summary>
-        private static JsonModelName GetApiResponse()
+        private static Dictionary<string, List<JsonNamesModel>> GetApiResponse()
         {
-            string query = QueryValues.getQueryString();
+            string query = queryValues.getQueryString();
             // Retreives json-string from api url with query
             var apiStringResponse = new WebClient().DownloadString(apiUrl + query);
 
-            JsonModelName apiResponse = JsonConvert.DeserializeObject<JsonModelName>(apiStringResponse);
+            var apiResponse = JsonConvert.DeserializeObject<Dictionary<string, List<JsonNamesModel>>>(apiStringResponse);
             // Used to convert the json string into model JsonModel
             //List<JsonModel> apiResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<JsonModel>(apiStringResponse);
             //JObject test = JObject.Parse(apiStringResponse);
@@ -161,23 +158,22 @@ namespace NameAPI
         /// Creates a NameModel List and populates it with the apiResponse parameter
         /// </summary>
         /// <param name="apiResponse"></param>
-        private static List<NameModel> PopulateNameModelList(JsonModelName apiResponse)
+        private static List<NameModel> PopulateNameModelList(Dictionary<string, List<JsonNamesModel>> apiResponse)
         {
             // creates list to be returned
             List<NameModel> nameModelList = new List<NameModel>();
 
-            // Goes through alla names from the api response
-            foreach (var name in apiResponse.names)
+            foreach (var person in apiResponse["names"])
             {
                 // Create NameModel object
                 NameModel item = new NameModel();
 
                 // Populate the item object with data from the current name iterated
-                item.FirstName = name.firstname;
-                item.LastName = name.surname;
+                item.FirstName = person.firstname;
+                item.LastName = person.surname;
 
                 // Checks gender type
-                switch (name.gender)
+                switch (person.gender)
                 {
                     case "both":
                         item.Gender = NameGender.Both;
@@ -193,6 +189,34 @@ namespace NameAPI
                 // Lastly adds the NameModel object into the NameModel List
                 nameModelList.Add(item);
             }
+
+            // Goes through alla names from the api response
+            //foreach (var name in apiResponse.names)
+            //{
+            //    // Create NameModel object
+            //    NameModel item = new NameModel();
+
+            //    // Populate the item object with data from the current name iterated
+            //    item.FirstName = name.firstname;
+            //    item.LastName = name.surname;
+
+            //    // Checks gender type
+            //    switch (name.gender)
+            //    {
+            //        case "both":
+            //            item.Gender = NameGender.Both;
+            //            break;
+            //        case "male":
+            //            item.Gender = NameGender.Male;
+            //            break;
+            //        case "female":
+            //            item.Gender = NameGender.Female;
+            //            break;
+            //    }
+
+            //    // Lastly adds the NameModel object into the NameModel List
+            //    nameModelList.Add(item);
+            //}
 
             return nameModelList;
         }
