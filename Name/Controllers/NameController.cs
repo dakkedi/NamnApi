@@ -4,6 +4,7 @@ using NameAPI.Models;
 using System;
 using Name.Models;
 using System.Collections.Specialized;
+using System.Diagnostics;
 
 namespace Name.Controllers
 {
@@ -97,6 +98,14 @@ namespace Name.Controllers
         {
             TempData["form"] = Request.Form;
             return RedirectToAction("Index", "Home", Request.Form);
+        }
+
+        [HttpPost]
+        public PartialViewResult AjaxGetMoreNames()
+        {
+            NameValueCollection FormData = Request.Form;
+            ViewBag.Names = GetNames(FormData);
+            return PartialView("NameFormResult");
         }
     }
 }

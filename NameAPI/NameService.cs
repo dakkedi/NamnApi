@@ -24,7 +24,7 @@ namespace NameAPI
         public string limit = "10";
         public string type = "both";
         public string gender = "both";
-        
+
         private string query;
 
         /// <summary>
@@ -38,17 +38,18 @@ namespace NameAPI
         /// <summary>
         /// Overrides current query string
         /// </summary>
-        private void setQueryString(string limit, string type, string gender)
+        private void setQueryString(string plimit, string ptype, string pgender)
         {
             query = "?limit=" + limit + "&type=" + type + "&gender=" + gender;
         }
 
         /// <summary>
-        /// Returns the current query string
+        /// Sets and returns the current query string
         /// </summary>
         /// <returns>string</returns>
         public string getQueryString()
         {
+            setQueryString(limit, type, gender);
             return query;
         }
 
@@ -189,34 +190,6 @@ namespace NameAPI
                 // Lastly adds the NameModel object into the NameModel List
                 nameModelList.Add(item);
             }
-
-            // Goes through alla names from the api response
-            //foreach (var name in apiResponse.names)
-            //{
-            //    // Create NameModel object
-            //    NameModel item = new NameModel();
-
-            //    // Populate the item object with data from the current name iterated
-            //    item.FirstName = name.firstname;
-            //    item.LastName = name.surname;
-
-            //    // Checks gender type
-            //    switch (name.gender)
-            //    {
-            //        case "both":
-            //            item.Gender = NameGender.Both;
-            //            break;
-            //        case "male":
-            //            item.Gender = NameGender.Male;
-            //            break;
-            //        case "female":
-            //            item.Gender = NameGender.Female;
-            //            break;
-            //    }
-
-            //    // Lastly adds the NameModel object into the NameModel List
-            //    nameModelList.Add(item);
-            //}
 
             return nameModelList;
         }

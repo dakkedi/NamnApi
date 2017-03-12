@@ -5,6 +5,6 @@
 <select id="name-type" name="nameTypeData">
     @foreach (var typeItem in Model.TypeItems)
     {
-        <option value="@typeItem.Value">@typeItem.Text</option>
+        <option value="@typeItem.Value" @if ((string)TempData["type"] == typeItem.Value.ToString()) { <text>selected</text> }>@typeItem.Text</option>
     }
 </select>

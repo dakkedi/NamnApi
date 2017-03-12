@@ -17,20 +17,24 @@
             </div>
             <div class="col-md-4">
                 <label for="name-limit">Limit of names</label>
-                <input type="number" id="name-limit" name="nameLimitData" value="10" min="0">
+                <input type="number" id="name-limit" name="nameLimitData" value="@TempData["limit"]" min="0">
             </div>
         </div>
-        <input type="submit" name="submit" value="Hämta namn" />
+        <input type="submit" name="submit" value="Reload" />
     }
-
-    <div class="row">
-        <div class="col-sm-6 col-sm-offset-3">
-            <ul>
-                @foreach (var name in ViewBag.Names)
-                {
-                    <li>@name.FirstName @name.LastName, @name.Gender</li>
-                }
-            </ul>
-        </div>
+    
+    <div id="name-form">
+        <ul>
+            @foreach (var name in ViewBag.Names)
+            {
+                <li>@name.FirstName @name.LastName, @name.Gender</li>
+            }
+        </ul>
     </div>
+    @Ajax.BeginForm("AjaxGetMoreNames", "Name", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "name-form", InsertionMode = InsertionMode.InsertAfter, LoadingElementId = "name-form-loading" })
+        <input type="hidden" name="nameLimitData" value="@TempData["limit"]" />
+        <input type="hidden" name="nameGenderData" value="@TempData["gender"]" />
+        <input type="hidden" name="nameTypeData" value="@TempData["Type"]" />
+        <input type="submit" name="submit" value="Load more" />
+    @{ Html.EndForm(); }
 </div>

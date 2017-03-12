@@ -13,16 +13,21 @@ namespace Name.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
+            NameValueCollection FormData = null;
             if (TempData["form"] != null)
             {
-                NameValueCollection FormData = (NameValueCollection)TempData["form"];
-                
+                FormData = (NameValueCollection)TempData["form"];
+
                 ViewBag.Names = NameController.GetNames(FormData);
             }
             else
             {
                 ViewBag.Names = NameController.GetNames();
             }
+
+            TempData["limit"] = FormData != null ? FormData.Get("nameLimitData") : "10";
+            TempData["type"] = FormData != null ? FormData.Get("nameTypeData") : "0";
+            TempData["gender"] = FormData != null ? FormData.Get("nameGenderData") : "0";
             return View();
         }
     }
