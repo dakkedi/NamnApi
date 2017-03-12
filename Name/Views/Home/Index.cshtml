@@ -1,40 +1,40 @@
 ﻿@using System.Web.Mvc;
 @using System.Web.Mvc.Html;
 
-@{
-    ViewBag.Title = "Home Page";
-}
 <div class="container">
     <h1>Get your names here!</h1>
     @using (Html.BeginForm("PostGetNames", "Name", FormMethod.Post))
     {
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 @{ Html.RenderAction("GetGenderDropdown", "Name"); }
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 @{ Html.RenderAction("GetTypeDropdown", "Name"); }
             </div>
-            <div class="col-md-4">
-                <label for="name-limit">Limit of names</label>
+            <div class="col-md-3">
+                <label for="name-limit">Number</label>
                 <input type="number" id="name-limit" name="nameLimitData" value="@TempData["limit"]" min="0">
             </div>
+            <div class="col-sm-3">
+                <input type="submit" name="submit" value="Reload" />
+            </div>
         </div>
-        <input type="submit" name="submit" value="Reload" />
     }
     
     <div id="name-form">
-        <ul>
-            @foreach (var name in ViewBag.Names)
-            {
-                <li>@name.FirstName @name.LastName, @name.Gender</li>
-            }
-        </ul>
+        @foreach (var name in ViewBag.Names)
+        {
+            <span>@name.FirstName @name.LastName, @name.Gender</span><br />
+        }
     </div>
-    @Ajax.BeginForm("AjaxGetMoreNames", "Name", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "name-form", InsertionMode = InsertionMode.InsertAfter, LoadingElementId = "name-form-loading" })
+    <br />
+    @* Unobtrusive Ajax script imported in layout *@
+    @using (Ajax.BeginForm("AjaxGetMoreNames", "Name", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "name-form", InsertionMode = InsertionMode.InsertAfter, LoadingElementId = "name-form-loading" }))
+    {
         <input type="hidden" name="nameLimitData" value="@TempData["limit"]" />
         <input type="hidden" name="nameGenderData" value="@TempData["gender"]" />
         <input type="hidden" name="nameTypeData" value="@TempData["Type"]" />
         <input type="submit" name="submit" value="Load more" />
-    @{ Html.EndForm(); }
+    }
 </div>

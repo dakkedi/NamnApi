@@ -84,7 +84,7 @@ namespace NameAPI
         /// <param name="limit"></param>
         public static List<NameModel> GetNameList(NameType type, int limit)
         {
-            queryValues.type = type.ToString();
+            queryValues.type = type.ToString().ToLower();
             queryValues.limit = limit.ToString();
             // Prepares a list of names from the response of the query
             List<NameModel> nameList = PrepareNameList();
@@ -99,7 +99,7 @@ namespace NameAPI
         /// <param name="limit"></param>
         public static List<NameModel> GetNameList(NameGender gender, int limit)
         {
-            queryValues.gender = gender.ToString();
+            queryValues.gender = gender.ToString().ToLower();
             queryValues.limit = limit.ToString();
             // Prepares a list of names from the response of the query
             List<NameModel> nameList = PrepareNameList();

@@ -4,7 +4,6 @@ using NameAPI.Models;
 using System;
 using Name.Models;
 using System.Collections.Specialized;
-using System.Diagnostics;
 
 namespace Name.Controllers
 {
@@ -25,13 +24,34 @@ namespace Name.Controllers
             return nameModelList;
         }
 
+        /// <summary>
+        /// Checks form and picks the correct GetNames overload-method 
+        /// </summary>
+        /// <param name="FormData"></param>
+        /// <returns></returns>
         public static List<NameModel> GetNames(NameValueCollection FormData)
         {
             NameType nameTypeValue = (NameType)Enum.Parse(typeof(NameType), FormData.Get("nameTypeData"));
             NameGender nameGenderValue = (NameGender)Enum.Parse(typeof(NameGender), FormData.Get("nameGenderData"));
             int nameLimitValue = int.Parse(FormData.Get("nameLimitData"));
 
-            List<NameModel> nameModelList = NameAPI.NameService.GetNameList(nameTypeValue, nameGenderValue, nameLimitValue);
+            List<NameModel> nameModelList;
+            if (nameTypeValue != NameType.Both && nameGenderValue != NameGender.Both)
+            {
+                nameModelList = NameAPI.NameService.GetNameList(nameTypeValue, nameGenderValue, nameLimitValue);
+            }
+            else if (nameTypeValue != NameType.Both)
+            {
+                nameModelList = NameAPI.NameService.GetNameList(nameTypeValue, nameLimitValue);
+            }
+            else if (nameGenderValue != NameGender.Both)
+            {
+                nameModelList = NameAPI.NameService.GetNameList(nameGenderValue, nameLimitValue);
+            }
+            else
+            {
+                nameModelList = NameAPI.NameService.GetNameList(nameLimitValue);
+            }
 
             return nameModelList;
         }
@@ -100,6 +120,10 @@ namespace Name.Controllers
             return RedirectToAction("Index", "Home", Request.Form);
         }
 
+        /// <summary>
+        /// Ajax Form Action, fetches name results and puts them into a partial view shared/NameFormResult
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public PartialViewResult AjaxGetMoreNames()
         {
